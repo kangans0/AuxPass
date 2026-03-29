@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- ANIMATIONS --- */
+@keyframes aurora {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- BASE STYLES --- */
+body {
+  @apply bg-[#050505] text-white font-sans antialiased selection:bg-[#1db954] selection:text-white;
+  
+  /* 1. AURORA BACKGROUND LAYER */
+  background-color: #050505;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(29, 185, 84, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(112, 0, 255, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(29, 185, 84, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(112, 0, 255, 0.15) 0px, transparent 50%);
+    
+  background-size: 140% 140%;
+  animation: aurora 15s ease infinite;
+  
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative; /* Needed for the grid overlay */
+}
+
+/* 2. GRID OVERLAY LAYER (New Feature) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* Sits behind the content but on top of the background color */
+  pointer-events: none;
+  
+  /* Create the Grid Lines */
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    
+  background-size: 60px 60px; /* Size of the grid squares */
+  
+  /* Optional: Fade the grid out at the edges for a refined look */
+  mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+  -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+}
+
+/* --- UTILITIES --- */
+
+.glass-panel {
+  @apply bg-[#181818]/60 backdrop-blur-2xl border border-white/5 shadow-2xl;
+}
+
+.netflix-card {
+  @apply transition-all duration-300 ease-out cursor-pointer relative z-0;
+}
+.netflix-card:hover {
+  @apply z-50 scale-110 shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-white/20;
+}
+
+.glow-shadow {
+  box-shadow: 0 0 40px -10px var(--glow-color, rgba(255,255,255,0.1));
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-[#1db954] to-[#1ed760];
+}
+
+/* Hide Scrollbar */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #555; }
+
+.rank-number {
+  -webkit-text-stroke: 2px #555;
+  color: #090909;
+  font-family: 'Outfit', sans-serif;
+  line-height: 0.8;
+}
